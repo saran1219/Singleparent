@@ -2,9 +2,6 @@ import React, { useState } from "react";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-
-// Configure axios base URL
-axios.defaults.baseURL = 'http://localhost:5000';
 import { useGoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode"; // fixed import
 import { Heart} from 'lucide-react';

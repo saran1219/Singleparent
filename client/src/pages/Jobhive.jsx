@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_URL } from "../config";
 
 export default function CareGrooveJobs() {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ export default function CareGrooveJobs() {
   const [applicationDeadline, setApplicationDeadline] = useState('');
   const [applicationLink, setApplicationLink] = useState('');
 
-  const API_URL = "http://localhost:5000";
+  const API_URL_CONST = API_URL;
 
   // Logout handler
   const handleLogout = () => {
@@ -68,7 +69,7 @@ export default function CareGrooveJobs() {
     
     try {
       // Try without auth first since we made it public
-      const res = await axios.get(`${API_URL}/api/posts/all-jobs`);
+      const res = await axios.get(`${API_URL_CONST}/api/posts/all-jobs`);
       console.log('✅ Jobs response:', res.data);
       const jobPosts = res.data.jobs || [];
       setJobs(jobPosts);
@@ -81,7 +82,7 @@ export default function CareGrooveJobs() {
       const token = localStorage.getItem("userToken");
       if (token) {
         try {
-          const res = await axios.get(`${API_URL}/api/posts/all-jobs`, {
+          const res = await axios.get(`${API_URL_CONST}/api/posts/all-jobs`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           const jobPosts = res.data.jobs || [];
@@ -138,7 +139,7 @@ export default function CareGrooveJobs() {
     if (docFile) formData.append("doc", docFile);
 
     try {
-      const res = await axios.post(`${API_URL}/api/posts`, formData, {
+      const res = await axios.post(`${API_URL_CONST}/api/posts`, formData, {
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" },
       });
       
@@ -169,8 +170,8 @@ export default function CareGrooveJobs() {
     const getProfilePicUrl = (pic) => {
       if (!pic) return null;
       if (pic.startsWith('http')) return pic;
-      if (pic.startsWith('/uploads/')) return `http://localhost:5000${pic}`;
-      return `http://localhost:5000/uploads/${pic}`;
+      if (pic.startsWith('/uploads/')) return `${API_URL_CONST}${pic}`;
+      return `${API_URL_CONST}/uploads/${pic}`;
     };
 
     return (

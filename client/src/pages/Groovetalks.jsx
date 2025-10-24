@@ -3,6 +3,7 @@ import { Heart, Share2, Bell, User, Plus, Image, Paperclip } from 'lucide-react'
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
+import { API_URL } from "../config";
 
 const Groovetalks = () => {
   const [thoughts, setThoughts] = useState([]);
@@ -17,8 +18,8 @@ const Groovetalks = () => {
   const [connections, setConnections] = useState([]);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
-
-  const API_URL = "http://localhost:5000";
+  
+  const API_URL_CONST = API_URL;
 
   const handleLogout = () => {
     localStorage.removeItem("userToken");
@@ -48,7 +49,7 @@ const Groovetalks = () => {
     if (!token) return;
 
     try {
-      const res = await axios.get(`${API_URL}/api/connections`, {
+      const res = await axios.get(`${API_URL_CONST}/api/connections`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setConnections(res.data.connections || []);
@@ -64,7 +65,7 @@ const Groovetalks = () => {
     
     try {
       // Try without auth first since we made it public
-      const res = await axios.get(`${API_URL}/api/posts/all-thoughts`);
+      const res = await axios.get(`${API_URL_CONST}/api/posts/all-thoughts`);
       console.log('✅ Thoughts response:', res.data);
       const allThoughts = res.data.thoughts || [];
       setThoughts(allThoughts);
@@ -77,7 +78,7 @@ const Groovetalks = () => {
       const token = localStorage.getItem("userToken");
       if (token) {
         try {
-          const res = await axios.get(`${API_URL}/api/posts/all-thoughts`, {
+          const res = await axios.get(`${API_URL_CONST}/api/posts/all-thoughts`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           const allThoughts = res.data.thoughts || [];
@@ -146,9 +147,9 @@ const Groovetalks = () => {
       if (newThought.image) {
         if (!newThought.image.startsWith('http')) {
           if (newThought.image.startsWith('/uploads/')) {
-            newThought.image = `${API_URL}${newThought.image}`;
+            newThought.image = `${API_URL_CONST}${newThought.image}`;
           } else {
-            newThought.image = `${API_URL}/uploads/${newThought.image}`;
+            newThought.image = `${API_URL_CONST}/uploads/${newThought.image}`;
           }
         }
       }
@@ -171,8 +172,8 @@ const Groovetalks = () => {
     const getProfilePicUrl = (pic) => {
       if (!pic) return null;
       if (pic.startsWith('http')) return pic;
-      if (pic.startsWith('/uploads/')) return `http://localhost:5000${pic}`;
-      return `http://localhost:5000/uploads/${pic}`;
+      if (pic.startsWith('/uploads/')) return `${API_URL_CONST}${pic}`;
+      return `${API_URL_CONST}/uploads/${pic}`;
     };
 
     return (

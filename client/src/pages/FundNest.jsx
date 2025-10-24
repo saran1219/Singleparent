@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Mail, Phone, MapPin, User, Bell } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_URL } from "../config";
 
 const FundNest = () => {
   const [activeTab, setActiveTab] = useState('most-urgent');
@@ -23,7 +24,7 @@ const FundNest = () => {
         const token = localStorage.getItem("userToken");
         if (!token) return;
         
-        const response = await axios.get("http://localhost:5000/api/user/profile", {
+        const response = await axios.get(`${API_URL}/api/user/profile`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         
@@ -42,7 +43,7 @@ const FundNest = () => {
   useEffect(() => {
     const fetchCampaigns = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/campaigns");
+        const response = await axios.get(`${API_URL}/api/campaigns`);
         if (response.data.success) {
           const campaignsData = response.data.campaignsList || [];
           
@@ -208,14 +209,14 @@ const FundNest = () => {
     try {
       const token = localStorage.getItem("userToken");
       const response = await axios.delete(
-        `http://localhost:5000/api/campaigns/${campaignId}`,
+        `${API_URL}/api/campaigns/${campaignId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
       if (response.data.success) {
         alert("Campaign deleted successfully");
         // Refresh campaigns
-        const refreshResponse = await axios.get("http://localhost:5000/api/campaigns");
+        const refreshResponse = await axios.get(`${API_URL}/api/campaigns`);
         if (refreshResponse.data.success) {
           const campaignsData = refreshResponse.data.campaignsList || [];
           const mostUrgent = campaignsData.filter(c => c.priority === 'most-urgent');
@@ -377,8 +378,8 @@ const FundNest = () => {
         // Check if editing or creating
         const isEditing = editingCampaign !== null;
         const url = isEditing 
-          ? `http://localhost:5000/api/campaigns/${editingCampaign._id || editingCampaign.id}`
-          : "http://localhost:5000/api/campaigns";
+          ? `${API_URL}/api/campaigns/${editingCampaign._id || editingCampaign.id}`
+          : `${API_URL}/api/campaigns`;
         const method = isEditing ? 'put' : 'post';
 
         // Send to backend
@@ -399,7 +400,7 @@ const FundNest = () => {
           setEditingCampaign(null);
           
           // Refresh campaigns from backend
-          const refreshResponse = await axios.get("http://localhost:5000/api/campaigns");
+          const refreshResponse = await axios.get(`${API_URL}/api/campaigns`);
           if (refreshResponse.data.success) {
             const campaignsData = refreshResponse.data.campaignsList || [];
             const mostUrgent = campaignsData.filter(c => c.priority === 'most-urgent');

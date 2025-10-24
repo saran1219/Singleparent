@@ -19,6 +19,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
+import { API_URL } from '../config';
 
 const CareGroovePage = ({ notifications, setNotifications }) => {
   const navigate = useNavigate();
@@ -56,7 +57,8 @@ const CareGroovePage = ({ notifications, setNotifications }) => {
     navigate("/login");
   };
   
-  const API_URL = "http://localhost:5000";
+  // Backend URL
+  const API_URL_CONST = API_URL;
   
   // Function to get file URL - handles all possible path formats
   const getFileUrl = (path) => {
@@ -72,15 +74,15 @@ const CareGroovePage = ({ notifications, setNotifications }) => {
     
     // Path starts with /uploads/
     if (path.startsWith("/uploads/")) {
-      finalUrl = `${API_URL}${path}`;
+      finalUrl = `${API_URL_CONST}${path}`;
     } 
     // Path starts with uploads/ (without leading slash)
     else if (path.startsWith("uploads/")) {
-      finalUrl = `${API_URL}/${path}`;
+      finalUrl = `${API_URL_CONST}/${path}`;
     }
     // Just the filename
     else {
-      finalUrl = `${API_URL}/uploads/${path}`;
+      finalUrl = `${API_URL_CONST}/uploads/${path}`;
     }
     
     console.log('getFileUrl:', path, '->', finalUrl);

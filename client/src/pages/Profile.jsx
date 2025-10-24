@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { API_URL } from "../config";
 
 export default function GrowConnectProfile({ notifications, setNotifications }) {
   const { userId } = useParams(); // Get userId from URL params
@@ -35,8 +36,6 @@ export default function GrowConnectProfile({ notifications, setNotifications }) 
   
   // Check if viewing own profile or another user's profile
   const isOwnProfile = !userId;
-
-  const API_URL = "http://localhost:5000"; // Backend URL
 
   // Function to render post/thought images/docs with backend URL
   const getFileUrl = (path) => {

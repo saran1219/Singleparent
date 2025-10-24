@@ -33,7 +33,7 @@ app.use(cookieParser());
 // Enable CORS for React frontend
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3001"], // your frontend URLs
+    origin: [process.env.FRONTEND_URL, "http://localhost:3000", "http://localhost:3001"].filter(Boolean), // your frontend URLs
     credentials: true,
   })
 );

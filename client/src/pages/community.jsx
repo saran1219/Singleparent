@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { API_URL } from '../config';
 
 const CommunityDashboard = () => {
   const navigate = useNavigate();
@@ -50,7 +51,8 @@ const CommunityDashboard = () => {
     navigate('/');
   };
   
-  const API_URL = "http://localhost:5000";
+  // Backend URL
+  const API_URL_CONST = API_URL;
   
   // Get profile image URL
   const getProfileImageUrl = (profilePic, userName = 'User') => {
@@ -61,9 +63,9 @@ const CommunityDashboard = () => {
     
     // Handle both old format (/uploads/filename) and new format (filename)
     if (profilePic.startsWith('/uploads/')) {
-      return `${API_URL}${profilePic}`;
+      return `${API_URL_CONST}${profilePic}`;
     }
-    return `${API_URL}/uploads/${profilePic}`;
+    return `${API_URL_CONST}/uploads/${profilePic}`;
   };
   
   // Join community function

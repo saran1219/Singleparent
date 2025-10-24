@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { User, Heart, Mail, MapPin, Calendar, ArrowLeft, UserMinus, Users } from "lucide-react";
 import axios from "axios";
+import { API_URL } from "../config";
 
 const MyNetwork = () => {
   const navigate = useNavigate();
@@ -182,7 +183,7 @@ const MyNetwork = () => {
                     <img
                       src={
                         connection.profilePic && connection.profilePic.startsWith('/')
-                          ? `http://localhost:5000${connection.profilePic}`
+                          ? `${API_URL}${connection.profilePic}`
                           : connection.profilePic || 
                             `https://ui-avatars.com/api/?name=${encodeURIComponent(connection.name || 'User')}&background=f59e0b&color=ffffff&size=80`
                       }
