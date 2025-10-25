@@ -123,6 +123,7 @@ const MainPage = ({ notifications, setNotifications }) => {
         time: 'now',
         type: 'general'
       }]);
+      if (window.showToast) window.showToast(`Connection request sent to ${recipientName}`, 'success');
     } catch (err) {
       console.error("Error sending connection request:", err.response?.data || err.message);
       if (err.response?.status === 400) {
@@ -152,6 +153,7 @@ const MainPage = ({ notifications, setNotifications }) => {
         time: 'now',
         type: 'general'
       }]);
+      if (window.showToast) window.showToast(`Connected with ${senderName}`, 'success');
     } catch (err) {
       console.error("Error accepting connection:", err.response?.data || err.message);
     }
@@ -184,8 +186,7 @@ const MainPage = ({ notifications, setNotifications }) => {
           time: 'now',
           type: 'general'
         }]);
-        
-        alert("🎉 Welcome to CareGroove Community! You've successfully joined our supportive community of single parents.");
+        if (window.showToast) window.showToast("Welcome to the community!", 'success');
       }
     } catch (error) {
       console.error("Error joining community:", error);

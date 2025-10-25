@@ -158,6 +158,7 @@ const Groovetalks = () => {
       setContent('');
       setImageFile(null);
       setDocFile(null);
+      if (window.showToast) window.showToast('Thought posted!', 'success');
     } catch (err) {
       console.error("Error creating thought:", err);
       alert("Failed to create thought");

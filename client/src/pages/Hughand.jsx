@@ -131,9 +131,10 @@ const CareGroovePage = ({ notifications, setNotifications }) => {
         });
         
         console.log('Processed posts:', processedPosts.length);
-        setPosts(processedPosts);
-        
-        // Extract post IDs that user has requested (with pending status)
+      setPosts(processedPosts);
+      if (processedPosts.length && window.showToast) window.showToast('Loaded latest posts', 'info');
+      
+      // Extract post IDs that user has requested (with pending status)
         const requestedPostIds = requestsResponse.data.sentRequests
           .filter(request => request.status === 'pending')
           .map(request => request.post._id);
@@ -199,7 +200,7 @@ const CareGroovePage = ({ notifications, setNotifications }) => {
       resetForm();
       setShowCreateCard(false);
       
-      alert("Post created successfully!");
+      if (window.showToast) window.showToast('Post created successfully!', 'success');
     } catch (error) {
       console.error("Error creating post:", error);
       alert("Failed to create post");

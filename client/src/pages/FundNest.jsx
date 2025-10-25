@@ -214,7 +214,7 @@ const FundNest = () => {
       );
 
       if (response.data.success) {
-        alert("Campaign deleted successfully");
+        if (window.showToast) window.showToast('Campaign deleted successfully', 'success');
         // Refresh campaigns
         const refreshResponse = await axios.get(`${API_URL}/api/campaigns`);
         if (refreshResponse.data.success) {
@@ -234,7 +234,7 @@ const FundNest = () => {
       }
     } catch (error) {
       console.error("Error deleting campaign:", error);
-      alert(error.response?.data?.message || "Failed to delete campaign");
+      if (window.showToast) window.showToast(error.response?.data?.message || 'Failed to delete campaign', 'error');
     }
   };
 
@@ -395,7 +395,7 @@ const FundNest = () => {
         );
 
         if (response.data.success) {
-          alert(isEditing ? "Campaign updated successfully!" : "Campaign created successfully!");
+          if (window.showToast) window.showToast(isEditing ? 'Campaign updated successfully!' : 'Campaign created successfully!', 'success');
           setIsFormOpen(false);
           setEditingCampaign(null);
           
@@ -418,7 +418,7 @@ const FundNest = () => {
         }
       } catch (error) {
         console.error("Error creating campaign:", error);
-        alert(error.response?.data?.message || "Failed to create campaign. Please try again.");
+        if (window.showToast) window.showToast(error.response?.data?.message || 'Failed to create campaign. Please try again.', 'error');
       }
     };
 

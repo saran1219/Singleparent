@@ -14,6 +14,7 @@ import Daycare from "./pages/Daycare";
 import Community from "./pages/community";
 import Addcaregiver from "./pages/Addcaregivers";
 import MyNetwork from "./pages/MyNetwork";
+import ToastContainer from "./components/Toast";
 function App() {
   // ✅ Shared notifications state
   const [notifications, setNotifications] = useState([
@@ -54,6 +55,7 @@ function App() {
 
   return (
     <Router>
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
